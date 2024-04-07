@@ -1,0 +1,185 @@
+1. Collection trong java
+a. Lời nói đầu
+	+ Do hạn chế của mảng: không thể thêm, xoá phần tử
+	+ Java cung cấp tập collection:
+		Chúng ta có thể thêm, xoá, và thay đổi kích cỡ của tập này
+
+*************************
+
+2. Hai lớp collection thường gặp
++ ArrayList và HashMap
++ ArrayList: Nó giống như một mảng nhưng có thể co giãn kích thước các phần tử
++ HashMap: cho phép bạn lưu trữ các cặp (key, value) và tìm kiếm các giá trị bằng key
+
+*************************
+Khai báo:
+
+ArrayList<Type> listName = new ArrayList<>();
+
+<Type> : Sử dụng wrapper class
+
+Type : Boolean, Char, Byte, Short, Integer, Long, Float, Double
+
+*************************
+Các phương thức:
+
+1. add (index, element)	: Thêm một phần tử -> IndexOutofBound exception. Sử dụng add này để chèn phần tử ở giữa arrayList vẫn được miễn index ko vượt quá size() + 1. Thằng add này là void nên ko để vào sys out print được.
+2. add (element)	: Không add được nếu khác kiểu dữ liệu
+2. size() 		: Trả về số phần tử của list. Ex: index tối đa của array là 5 -> số phần tử là 6
+3. get (int index)	: Trả về giá trị tại vị trí index -> IndexOutOfBoundsException
+3. remove(int index)	: Xoá theo vị trí index chỉ định -> IndexOutofBound
+4. remove(Integer.valueOf(9))	: Xoá số 9 trong danh sách, linh động kiểu dữ liệu -> true/false
+5. set(index, element)		: Đặt element thay thế vào vị trí chỉ định -> Trả về số index của vị trí được thay đổi, -> IndexOutOfBoundsException nếu index không tồn tại
+6. contains()			: Kiểm tra COLLECTION có chứa phần tử nào đó hay không. -> Trả về true/false
+7. Collections.sort()		: Sắp xếp tăng dần một array list thuộc java.util.Collections;. Ex: Collections.sort(lst3);	Thằng này sẽ void nên không để vào sys out print được. Nó sẽ làm thay đổi mảng ban đầu cụ thể ở đây là lst3.
+8. Collections.reverse()	: Đảo ngược list. tựa tựa thằng sort ở trên
+9. List.isEmpty()		: Hàm này trả về true/false. vd: lst3.isEmpty();
+10. clear()			: Xoá toàn bộ phần tử của list làm cho list thành [], void nên ko có kiểu trả về và làm thay đổi mảng ban đầu.
+
+*************************
+Best practice to declare ArrayList or collection implementation classes
+
+List type1 = new ArrayList();
+List type2 = new ArrayList<String>();
+List<String> type3 = new ArrayList<String>();
+ArrayList<String> type4 = new ArrayList<String>();
+List<String> type5 = null;
+ArrayList<String> type6 = null;
+
+The first two use raw types. Doing that means your list isn't type-safe at all. The compiler will let you store Integers inside even if your intention is to have a list of strings. The compiler will emit a warning, that you should not ignore.
+
+The third one is right. It tells the compiler that your intention is to use a List of strings, and that the specific implementation you chose is ArrayList. If you change your mind later and want to use a LinkedList, this line of code is the only one you need to change.
+
+The fourth one tells the compiler that your program doest't just need a List. It needs this List to be an ArrayList. This is OK if your code indeed needs to call methods that are specific to ArrayList, and are not present in the List interface. But in 99.9% of the cases, that's not the case and you should prefer the third one.
+
+The two last ones declare a variable and initialize it to null instead of creating a list. That is a design smell. You'll have to make sure everywhere, before using the list, that it's not null. It's much safer to initialize it with a valid list right away.
+
+
+Giải thích: 
+
+
+In Java, it's generally recommended to declare variables using the interface type (List<String>) rather than the concrete implementation (ArrayList<String>) when possible. Here are a few reasons why:
+
+Flexibility: By declaring the variable as a List<String>, you can easily switch to a different implementation of the List interface (e.g., LinkedList<String>) without changing the rest of the code that uses the variable. This provides more flexibility and makes the code more maintainable and adaptable to changes.
+
+Abstraction: Using the interface type emphasizes the abstraction and hides the implementation details, which is a key principle in object-oriented programming. It allows you to focus on the functionality provided by the List interface rather than the specific implementation.
+
+Encapsulation: Declaring variables with the interface type promotes encapsulation by exposing only the necessary methods and behaviors defined by the interface. It prevents the code from depending on specific methods or behaviors of a particular implementation (ArrayList), which can lead to tight coupling and make the code harder to maintain and refactor.
+
+Compliance with Liskov Substitution Principle: Using the interface type is in line with the Liskov Substitution Principle (LSP), one of the SOLID principles of object-oriented design. It ensures that objects of the subtype (ArrayList) can be substituted for objects of the supertype (List) without altering the correctness of the program.
+
+Here's an example to illustrate the flexibility and abstraction provided by declaring variables with the interface type:
+
+List<String> type3 = new ArrayList<String>();
+type3.add("Java");
+type3.add("Spring");
+System.out.println(type3);  // Output: [Java, Spring]
+
+// Switch to LinkedList
+type3 = new LinkedList<String>();
+type3.add("Python");
+type3.add("JavaScript");
+System.out.println(type3);  // Output: [Python, JavaScript]
+
+
+In this example, we can easily switch between ArrayList and LinkedList implementations without changing the rest of the code that uses the List variable (type3), demonstrating the flexibility and maintainability gained by declaring variables with the interface type.
+
+**************************
+
+Chú ý:
+https://gyansetu-core-java-for-java.gitbook.io/project/untitled-1/creating-and-using-list-set-and-deque-implementations/arraylist
+
++ Java ArrayList is not synchronized. If multiple threads try to modify an ArrayList at the same time, then the final outcome will be non-deterministic. You must explicitly synchronize access to an ArrayList if multiple threads are gonna modify it.
+
+*************************
+
+Iterating over an ArrayList
+https://gyansetu-core-java-for-java.gitbook.io/project/untitled-1/creating-and-using-list-set-and-deque-implementations/arraylist#iterating-over-an-arraylist
+
+1. Java 8 forEach and lambda expression.
+
+2. iterator().
+
+3. iterator() and Java 8 forEachRemaining() method.
+
+4. listIterator().
+
+5. Simple for-each loop.
+
+6. for loop with index.
+
+***************************
+
+Searching for elements in an ArrayList
+
+1. Check if an ArrayList contains a given element 			| contains()
+
+2. Find the index of the first occurrence of an element in an ArrayList | indexOf()
+
+3. Find the index of the last occurrence of an element in an ArrayList 	| lastIndexOf()
+
+**************************
+
+ArrayList of user defined objects
+
+Since ArrayList supports generics, you can create an ArrayList of any type. It can be of simple types like Integer, String, Double or complex types like an ArrayList of ArrayLists, or an ArrayList of HashMaps or an ArrayList of any user defined objects.
+
+***************************
+
+Sorting an ArrayList
+
++ Sort an ArrayList using Collections.sort() method.			| Collections.sort()
+
++ Sort an ArrayList using ArrayList.sort() method.			| ArrayList.sort()
+
++ Sort an ArrayList of user defined objects with a custom comparator.	| a custom comparator
+
+
+***************************
+
+Synchronizing Access to an ArrayList
+
+The ArrayList class is not synchronized. If multiple threads try to modify an ArrayList at the same time then the final result becomes not-deterministic because one thread might override the changes done by another thread.
+
+List<Integer> safeArrayList = Collections.synchronizedList(new ArrayList<>());
+
+
+***************************
+
+https://gyansetu-core-java-for-java.gitbook.io/project/untitled-1/creating-and-using-list-set-and-deque-implementations/arraylist#iterating-over-an-arraylist
+
+
+***************************
+
+Có Một số cách phổ biến thường gặp
+
+1. Biến một Mảng string thành danh sách string
+	List<String> list = new ArrayList<>();
+	String[] names = {"Anna", "Lisa", "Rose", "David"}
+	list.addAll(Arrays.asList(names))
+
+	Hoặc 
+	list.addAll(Arrays.asList(["Anna", "Lisa", "Rose", "David"]))
+
+
+2. Sử dụng hàm removeIf để loại bỏ phần tử
+	Ex: Lúc này trong những phần tử mà có chữ cái đầu tiên là G thì sẽ bị loại bỏ
+		list.removeIf(s -> s.charAt(0) == 'G');
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
